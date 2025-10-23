@@ -16,6 +16,8 @@ projectForm.addEventListener("submit", async (event) => {
       responsiblePerson: capitalizeEachWord(responsible.value),
     };
 
+    console.log(newProjectData);
+
     const response = await fetch(`${API_URL}/api/projects`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -46,12 +48,14 @@ function resetForm() {
   projectForm.reset(); 
 }
 
+// VERSIÓN CORRECTA
 const capitalizeEachWord = (str) => {
   if (!str) return '';
   return str
     .toLowerCase()
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 };
 
 const notification = (text, color, duration = 3000) => {
