@@ -1,10 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
-<body>
 
+<body class="m-5 border-0 bd-example m-0 border-0">
+<div class="mx-4 p-5 border border-1 rounded-2">
+    <h1>Edit Project</h1>
+
+    <form id="editProjectForm">
+        <input type="hidden" id="projectId">
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="titleProject" placeholder="Enter project title" required maxlength="100">
+            <label for="titleProject">Project Title</label>
+        </div>
+
+        <div class="form-floating mb-3">
+                <textarea class="form-control" placeholder="Enter a description" id="descriptionProject"
+                          style="height: 100px" maxlength="500"></textarea>
+            <label for="descriptionProject">Description</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="statusProject" placeholder="Enter project status" required maxlength="50">
+            <label for="statusProject">Status</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="responsibleProject" placeholder="Enter responsible person" required maxlength="100">
+            <label for="responsibleProject">Responsible Person</label>
+        </div>
+
+        <button type="submit" id="btnUpdate" class="btn btn-primary">Save Changes</button>
+        <a href="index.html" class="btn btn-secondary">Cancel and Back to List</a>
+    </form>
+</div>
+
+<script src="./js/app-edit.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </body>
+
 </html>
