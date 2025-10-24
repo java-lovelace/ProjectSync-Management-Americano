@@ -31,6 +31,34 @@ public class ProjectService {
         return projectRepository.findById(id)
                 .orElseThrow(() -> new ResourcesNotFoundException("Project not found with id: " + id));
     }
+
+    public Project updateProject(Long id, Project projectDetails) {
+        Project existingProject = getProjectById(id);
+
+        // Título (Requerido: no nulo ni en blanco)
+        safeUpdate(projectDetails.getTitle(), existingProject::setTitle, true);
+
+        // Descripción (No Requerido: puede ser nulo, pero no necesita ser validado contra isBlank)
+        safeUpdate(projectDetails.getDescription(), existingProject::setDescription, false);
+
+        // Status (Requerido: no nulo ni en blanco)
+        safeUpdate(projectDetails.getStatus(), existingProject::setStatus, true);
+
+        // Persona Responsable (Requerido: no nulo ni en blanco)
+        safeUpdate(projectDetails.getResponsiblePerson(), existingProject::setResponsiblePerson, true);
+
+        return projectRepository.save(existingProject);
+    }
+
+    private void safeUpdate(String newValue, java.util.function.Consumer<String> setter, boolean checkBlank) {
+        if (newValue != null) {
+            if (checkBlank && newValue.isBlank()) {
+                // Si se espera un valor (checkBlank=true) y viene vacío,
+                return;
+            }
+            setter.accept(newValue);
+        }
+    }
  
     // Logic for CRUD operations DELETE by ID
     @Transactional
