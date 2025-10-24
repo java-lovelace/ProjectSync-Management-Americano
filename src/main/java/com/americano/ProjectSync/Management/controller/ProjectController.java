@@ -40,7 +40,7 @@ public class ProjectController {
         return new ResponseEntity<>(projectById, HttpStatus.OK);
 
     }
-  
+
     // We use key notation to do the elimination method
     // DELETE /api/projects/{id}
     @DeleteMapping("/{id}")
@@ -48,6 +48,7 @@ public class ProjectController {
         projectService.deleteProject(id);
 
         return ResponseEntity.noContent().build();
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Project> updateProject(@PathVariable Long id, @Valid @RequestBody Project projectDetails) {
