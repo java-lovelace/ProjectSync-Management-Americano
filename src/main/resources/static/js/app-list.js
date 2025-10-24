@@ -2,13 +2,13 @@ const API_URL = "http://localhost:8080";
 const tableBody = document.getElementById("projectTableBody");
 const loadingMessage = document.getElementById("loadingMessage");
 
-// Ejecutar la carga de proyectos cuando el DOM esté listo
+// Run project loading when the DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
     loadProjects();
 });
 
 
-// Carga los proyectos desde la API y los muestra en la tabla.
+// Loads projects from the API and displays them in the table
 
 async function loadProjects() {
     showLoading(true);
@@ -30,7 +30,7 @@ async function loadProjects() {
     }
 }
 
-// Muestra u oculta el mensaje de carga.
+// Show or hide the loading message
 function showLoading(isLoading) {
     if (isLoading) {
         tableBody.innerHTML = ""; // Limpiar tabla mientras carga
@@ -41,7 +41,7 @@ function showLoading(isLoading) {
     }
 }
 
-// Muestra un mensaje de error en la tabla.
+// Displays an error message in the table
 function showError(message) {
     tableBody.innerHTML = `
         <tr>
@@ -51,7 +51,7 @@ function showError(message) {
 }
 
 function renderProjectTable(projects) {
-    // Limpiar la tabla antes de agregar nuevas filas
+    // Clean the table before adding new rows
     tableBody.innerHTML = "";
 
     if (projects.length === 0) {
@@ -66,7 +66,7 @@ function renderProjectTable(projects) {
     projects.forEach(project => {
         const row = document.createElement("tr");
 
-        // Formatear la fecha para que sea legible
+        // Format the date to make it readable
         const lastModified = new Date(project.lastModifiedDate).toLocaleString();
 
         row.innerHTML = `
