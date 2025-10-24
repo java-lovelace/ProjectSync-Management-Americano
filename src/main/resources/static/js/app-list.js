@@ -100,10 +100,10 @@ const notification = (text, color, duration = 3000) => {
   }).showToast();
 };
 
-// 2. CAMBIO: Nueva función para MOSTRAR la confirmación
+// Función para MOSTRAR la confirmación
 function deleteProject(id, title) {
 
-    // Creamos el nodo HTML que irá dentro de la notificación
+    // Nodo HTML que irá dentro de la notificación
     const toastNode = document.createElement('div');
     toastNode.innerHTML = `
         <div class="text-center">
@@ -115,15 +115,15 @@ function deleteProject(id, title) {
         </div>
     `;
 
-    // Creamos la instancia del Toast
+    // Instancia del Toast
     const toastInstance = Toastify({
         node: toastNode,
-        duration: 3000, // -1 para que no se cierre sola
+        duration: 3000,
         gravity: "top",
         position: "center",
-        close: false, // Muestra una 'X' para cerrar
+        close: false,
         style: {
-            background: "linear-gradient(to right, #ffc107, #e8a700)", // Un color de advertencia
+            background: "linear-gradient(to right, #ffc107, #e8a700)",
             color: "#000",
             borderRadius: "8px",
             padding: "15px",
@@ -131,24 +131,23 @@ function deleteProject(id, title) {
         }
     });
 
-    // Añadimos los listeners a los botones QUE ACABAMOS DE CREAR
+    // Listeners a los botones
     const confirmBtn = toastNode.querySelector(`#toast-confirm-btn-${id}`);
     const cancelBtn = toastNode.querySelector(`#toast-cancel-btn-${id}`);
 
     confirmBtn.addEventListener('click', () => {
-        executeDelete(id); // Llamamos a la lógica de borrado
-        toastInstance.hideToast(); // Cerramos la notificación
+        executeDelete(id);
+        toastInstance.hideToast();
     });
 
     cancelBtn.addEventListener('click', () => {
-        toastInstance.hideToast(); // Solo cerramos la notificación
+        toastInstance.hideToast();
     });
 
-    // Mostramos la notificación
     toastInstance.showToast();
 }
 
-// 3. CAMBIO: La lógica de borrado ahora está en su propia función
+// La lógica de borrado
 async function executeDelete(id) {
     try {
         const response = await fetch(`${API_URL}/api/projects/${id}`, {
@@ -157,7 +156,7 @@ async function executeDelete(id) {
 
         if (response.ok) { // HTTP 204 No Content
             notification("Project deleted successfully!", "#a7c957", 3000);
-            await loadProjects(); // Recargamos la tabla
+            await loadProjects();
         } else if (response.status === 404) {
             notification(`Error: Project with ID ${id} not found.`, "#b60404ff");
         } else {
