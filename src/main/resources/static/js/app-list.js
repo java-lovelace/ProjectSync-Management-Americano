@@ -84,7 +84,88 @@ function renderProjectTable(projects) {
     });
 }
 
-function deleteProject(id) {
-    console.warn(`Delete functionality for id ${id} is not implemented yet.`);
-    alert("Delete functionality is not implemented yet.");
+const notification = (text, color, duration = 3000) => {
+  Toastify({
+    text,
+    duration,
+    close: false,
+    gravity: "top",
+    position: "center",
+    stopOnFocus: true,
+    style: {
+      borderRadius: "8px",
+      padding: "15px",
+      background: color,
+    },
+  }).showToast();
+};
+
+// 2. CAMBIO: Nueva función para MOSTRAR la confirmación
+function deleteProject(id, title) {
+
+    // Creamos el nodo HTML que irá dentro de la notificación
+    const toastNode = document.createElement('div');
+    toastNode.innerHTML = `
+        <div class="text-center">
+            <strong>Are you sure you want to delete</strong>
+            <div class="mt-3">
+                <button class="btn btn-danger btn-sm me-2" id="toast-confirm-btn-${id}">Yes, Delete</button>
+                <button class="btn btn-secondary btn-sm" id="toast-cancel-btn-${id}">Cancel</button>
+            </div>
+        </div>
+    `;
+
+    // Creamos la instancia del Toast
+    const toastInstance = Toastify({
+        node: toastNode,
+        duration: 3000, // -1 para que no se cierre sola
+        gravity: "top",
+        position: "center",
+        close: false, // Muestra una 'X' para cerrar
+        style: {
+            background: "linear-gradient(to right, #ffc107, #e8a700)", // Un color de advertencia
+            color: "#000",
+            borderRadius: "8px",
+            padding: "15px",
+            boxShadow: "0 3px 6px rgba(0,0,0,0.16)",
+        }
+    });
+
+    // Añadimos los listeners a los botones QUE ACABAMOS DE CREAR
+    const confirmBtn = toastNode.querySelector(`#toast-confirm-btn-${id}`);
+    const cancelBtn = toastNode.querySelector(`#toast-cancel-btn-${id}`);
+
+    confirmBtn.addEventListener('click', () => {
+        executeDelete(id); // Llamamos a la lógica de borrado
+        toastInstance.hideToast(); // Cerramos la notificación
+    });
+
+    cancelBtn.addEventListener('click', () => {
+        toastInstance.hideToast(); // Solo cerramos la notificación
+    });
+
+    // Mostramos la notificación
+    toastInstance.showToast();
+}
+
+// 3. CAMBIO: La lógica de borrado ahora está en su propia función
+async function executeDelete(id) {
+    try {
+        const response = await fetch(`${API_URL}/api/projects/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) { // HTTP 204 No Content
+            notification("Project deleted successfully!", "#a7c957", 3000);
+            await loadProjects(); // Recargamos la tabla
+        } else if (response.status === 404) {
+            notification(`Error: Project with ID ${id} not found.`, "#b60404ff");
+        } else {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+    } catch (error) {
+        console.error('Error deleting project:', error);
+        notification("Error deleting project. Please try again later.", "#b60404ff", 3000);
+    }
 }
