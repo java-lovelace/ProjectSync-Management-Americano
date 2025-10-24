@@ -44,7 +44,7 @@ public class ProjectController {
     // We use key notation to do the elimination method
     // DELETE /api/projects/{id}
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProject(@PathVariable Long id){
+    public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
         projectService.deleteProject(id);
 
         return ResponseEntity.noContent().build();

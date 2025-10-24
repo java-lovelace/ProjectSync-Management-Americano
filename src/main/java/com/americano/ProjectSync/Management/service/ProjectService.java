@@ -62,14 +62,14 @@ public class ProjectService {
  
     // Logic for CRUD operations DELETE by ID
     @Transactional
-    public void deleteProject(Long id){
+    public void deleteProject(Long id) {
         // We check if the project exists before deleting it
         boolean exists = projectRepository.existsById(id);
-
         // If the project does not exist, it enters the conditional to launch the NotFound
-        if(!exists){
+        if (!exists) {
             throw new ResourcesNotFoundException("Project with id " + id + " does not exists");
         }
         // The delete operation continues and the project is deleted
         projectRepository.deleteById(id);
+    }
 }
