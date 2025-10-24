@@ -1,22 +1,8 @@
 package com.americano.ProjectSync.Management.service;
 
-import com.americano.ProjectSync.Management.exception.ResourcesNotFoundException;
-import com.americano.ProjectSync.Management.model.Project;
-import com.americano.ProjectSync.Management.repository.ProjectRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-@ExtendWith(MockitoExtension.class)
 class ProjectServiceTest {
+
 
     @Mock
     private ProjectRepository projectRepository;
@@ -113,4 +99,5 @@ class ProjectServiceTest {
         verify(projectRepository, times(0)).save(any(Project.class));
 
     }
+
 }
