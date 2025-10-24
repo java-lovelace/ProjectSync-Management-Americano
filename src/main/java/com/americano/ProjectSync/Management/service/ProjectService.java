@@ -20,7 +20,6 @@ public class ProjectService {
     public void deleteProject(Long id){
         // We check if the project exists before deleting it
         boolean exists = projectRepository.existsById(id);
-
         // If the project does not exist, it enters the conditional to launch the NotFound
         if(!exists){
             throw new ResourcesNotFoundException("Project with id " + id + " does not exists");
